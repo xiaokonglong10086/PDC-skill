@@ -1,0 +1,13 @@
+interface:
+  display_name: "Product Development Controller"
+  short_description: "Persistent product development control for a product owner and coding agent"
+  default_prompt: "Recover the repository-backed project state, verify the active contract and evidence, then tell me the single next required action, the coding agent task, and any product decision or manual acceptance I must perform. Do not move frozen completion conditions."
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

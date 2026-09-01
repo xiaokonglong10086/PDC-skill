@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "task_id": "{{TASK_ID}}",
+  "status": "draft",
+  "blocked_from": null,
+  "blocked_reason": null,
+  "blocked_at": null,
+  "blocked_by": null,
+  "contract_version": null,
+  "contract_digest": null,
+  "implementation_snapshot_digest": null,
+  "review_commit_sha": null,
+  "test_execution_record_digest": null,
+  "updated_at": null,
+  "history": []
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "task_id": "{{TASK_ID}}",
+  "contract_version": null,
+  "contract_digest": "",
+  "implementation_snapshot_digest": "",
+  "review_commit_sha": "",
+  "decision": "",
+  "recorded_at": null,
+  "tester": "",
+  "environment": "",
+  "scenarios": [],
+  "notes": ""
+}

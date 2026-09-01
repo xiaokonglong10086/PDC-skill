@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "run_id": "replace-with-stable-run-id",
+  "created_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "packet": {
+    "packet_id": "replace-with-packet-id",
+    "catalog_sha256": "replace-with-catalog-sha256"
+  },
+  "subject": {
+    "repository_identity": "replace-with-packet-value",
+    "commit_sha": "replace-with-40-char-commit-sha",
+    "skill_path": "product-development-controller/SKILL.md",
+    "skill_sha256": "replace-with-skill-sha256",
+    "operating_model_sha256": "60657356693d610ede67a12aa8bc564c5791338ca23fa1474d22a02dc5aba82a"
+  },
+  "profile": {
+    "name": "full-v1",
+    "kind": "full",
+    "scenario_ids": []
+  },
+  "assurance": {
+    "type": "controller_self_check",
+    "independent_review": false,
+    "execution_context": {
+      "executor": "controller",
+      "session_id": "replace-with-context-id",
+      "fresh_session_declared": false
+    },
+    "evaluation_context": {
+      "evaluator": "controller",
+      "session_id": "replace-with-context-id"
+    },
+    "external_attestation": null
+  },
+  "declared_status": "EVIDENCE_MISSING",
+  "results": []
+}

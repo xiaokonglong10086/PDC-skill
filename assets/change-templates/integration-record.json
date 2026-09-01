@@ -1,0 +1,38 @@
+{
+  "schema_version": 2,
+  "task_id": "{{TASK_ID}}",
+  "contract_version": null,
+  "contract_digest": "",
+  "implementation_snapshot_digest": "",
+  "review_commit_sha": "",
+  "review_report_digest": "",
+  "acceptance_record_digest": "",
+  "repository_identity": "",
+  "repository_root": "",
+  "base_branch": "",
+  "base_branch_tip_sha": "",
+  "merge_commit_sha": "",
+  "pull_request": {
+    "provider": null,
+    "url": null,
+    "number": null
+  },
+  "ci": {
+    "status": "",
+    "verification": "",
+    "provider": "",
+    "workflow": "",
+    "url": null,
+    "run_id": null,
+    "verified_by": "",
+    "verified_at": null
+  },
+  "post_merge_verification": [],
+  "release": {
+    "reference": null,
+    "rollback": ""
+  },
+  "closure_assurance": "",
+  "recorded_at": null,
+  "record_digest": ""
+}

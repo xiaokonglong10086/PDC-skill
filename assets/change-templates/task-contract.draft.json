@@ -1,0 +1,33 @@
+{
+  "schema_version": 3,
+  "contract_version": 1,
+  "task_id": "{{TASK_ID}}",
+  "title": "{{TITLE}}",
+  "slug": "{{SLUG}}",
+  "baseline": {
+    "repository": "",
+    "branch": "",
+    "sha": ""
+  },
+  "user_result": "",
+  "in_scope": [],
+  "out_of_scope": [],
+  "allowed_files": [],
+  "forbidden_changes": [],
+  "acceptance_criteria": [],
+  "required_tests": [],
+  "required_evidence": [],
+  "manual_acceptance": [],
+  "post_merge_checks": [],
+  "global_stop_conditions": [
+    "security_vulnerability",
+    "authorization_or_tenant_bypass",
+    "data_loss_or_corruption",
+    "privacy_or_secret_exposure",
+    "irreversible_migration_risk",
+    "required_build_failure",
+    "existing_core_flow_regression"
+  ],
+  "non_blocking_findings_policy": "Record optional improvements, pre-existing debt, and out-of-scope ideas in backlog or a separate issue. They cannot change PASS.",
+  "test_first_exception": null
+}

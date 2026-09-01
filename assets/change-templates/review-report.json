@@ -1,0 +1,19 @@
+{
+  "schema_version": 4,
+  "task_id": "{{TASK_ID}}",
+  "contract_version": null,
+  "contract_digest": "",
+  "implementation_snapshot_digest": "",
+  "review_commit_sha": "",
+  "baseline_sha": "",
+  "test_execution_record_digest": "",
+  "reviewed_at": null,
+  "reviewer": "",
+  "verdict": "",
+  "checked_criteria": [],
+  "tests_checked": [],
+  "evidence_checked": [],
+  "blocking_findings": [],
+  "evidence_missing": [],
+  "non_blocking_findings": []
+}

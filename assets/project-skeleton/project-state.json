@@ -1,0 +1,26 @@
+{
+  "schema_version": 3,
+  "project_name": "{{PROJECT_NAME}}",
+  "repository_root": "{{REPOSITORY_ROOT}}",
+  "coding_agent": "other",
+  "capabilities": {
+    "repository_access": null,
+    "shell_access": null,
+    "git_access": null,
+    "write_access": null,
+    "python_execution": null,
+    "project_test_execution": null,
+    "browser_access": null,
+    "github_connector": null
+  },
+  "current_stage": "intake",
+  "current_change": null,
+  "current_task_status": "uninitialized",
+  "last_closed_change": null,
+  "last_closed_ref": null,
+  "last_closure_assurance": null,
+  "next_required_action": "establish_project_facts",
+  "blocked_by": [],
+  "requires_user_decision": false,
+  "history": []
+}
