@@ -1,25 +1,81 @@
-# PDC — Product Development Controller
+# PDC — 产品开发控制器（Product Development Controller）
 
-PDC helps non-technical and weakly technical Product Owners control persistent digital-product development without becoming the Git, log, or recovery operator. It keeps product work outcome-first rather than implementation-first, with one advancing Work Focus and explicit routes through Explore, Preview, and Engineering.
+**让 AI 辅助的产品开发始终聚焦、可验证、可恢复——而不必把产品负责人变成工程师。**
 
-Evidence & Authority is a separate control layer. Engineering boundaries are frozen before implementation; a Builder cannot self-approve; and every technical completion claim is bound to an exact deliverable identity and independent verification. Technical PASS remains distinct from Product Owner visible acceptance. Integration and closure preserve recoverable continuity so work can resume from durable repository evidence.
+AI 可以快速生成代码，但长期产品开发真正困难的部分，是持续判断下一步该做什么、阻止范围漂移、确认现有证据是否足够、验证实际交付物，以及在中断后可靠地恢复工作。
 
-Software/PDC is the implemented strict, repository-backed Engineering profile. This repository is a curated public portfolio snapshot of mature capability, not private development authority. It has no automatic private-to-public sync, and no open-source license is granted.
+**PDC 就是为这些问题设计的控制层。** 产品负责人可以继续专注于成果和产品决策，由 PDC 管理开发路线、证据、工程边界、验证、交付与连续性。
 
-## Repository map
+## PDC 能做什么
 
-- `SKILL.md` — controller entry point and operating contract
-- `references/` — product, authority, workflow, review, and recovery rules
-- `scripts/` — deterministic lifecycle, validation, evidence, and public self-test tooling
-- `assets/` — project templates and model-behavior evaluation assets
-- `PORTFOLIO.md` — design rationale and capability overview
-- `PUBLIC_VERIFICATION.md` — curated standalone public verification suite and commands
-- `PUBLIC_RELEASE_SCOPE.md` — the public/private release boundary
+- **从成果出发，而不是从实现方案出发。** App、Skill、Agent、自动化或原型都只是可能的路线，不会自动成为答案。
+- **始终只推进一个工作焦点。** 可以同时保留多个想法，但一次只有一条工作线向前推进。
+- **选择正确的工作模式。** Explore 用于降低关键不确定性，Preview 用于获得可信的现实证据，Engineering 用于可靠地构建和交付已经理解清楚的行为。
+- **选择成本最低且可信的下一步。** 当更简单的行动已经足够时，不额外增加研究、会议、原型或流程。
+- **区分信心与证据。** 模型、开发者或工具声称“可以运行”，不等于已经证明它确实可用。
+- **冻结工程完成边界。** 完成标准一旦批准，就不能在实现或评审过程中被悄悄移动。
+- **防止自我批准。** 负责构建的一方不能成为唯一有权宣布结果正确的一方。
+- **区分技术 PASS 与产品验收。** 技术验证证明约定边界已经满足；产品负责人验收用户真正能看到和使用的产品行为。
+- **保存可恢复的长期连续性。** 新会话或其他服务提供方可以从持久证据中恢复路线、决策、交付物身份、验证结果与交付状态，而不依赖聊天记忆。
+- **把技术操作留在幕后。** Git 恢复、日志、哈希、常规技术选择和中断恢复由系统负责，除非它们确实会影响产品决策。
 
-## How to inspect
+## 工作方式
 
-1. Read `SKILL.md` for the control model and routing rules.
-2. Follow its direct references for the relevant mode or lifecycle phase.
-3. Run `python scripts/audit_skill_package.py` to validate the curated package boundary.
-4. Follow `PUBLIC_VERIFICATION.md` to run the complete standalone public verification suite.
+```text
+成果目标
+  ↓
+一个工作焦点
+  ↓
+Explore / Preview / Engineering
+  ↓
+成本最低且可信的下一步
+  ↓
+证据和/或实现
+  ↓
+独立验证
+  ↓
+需要时进行产品可见验收
+  ↓
+交付、关闭与持久恢复
+```
 
+这套方式让开发保持速度，同时不把“做得快”误认为“做得对”。
+
+## 适合谁
+
+- 使用 AI 开发工具、但不希望承担工程操作的非技术或弱技术产品负责人；
+- 已经超出临时提示词和聊天记忆承载范围的长期 AI 辅助产品工作；
+- 希望提高执行自主性，同时保留产品决策权、证据质量和清晰完成标准的团队；
+- 需要严格、可检查工程控制的仓库型软件项目。
+
+## 当前能力边界
+
+PDC 的控制模型可以用于软件、Skills、Agents、自动化/工作流、原型、内部工具及混合数字交付物。
+
+目前已经完整实现的严格正式工程 Profile 是仓库型 **Software/PDC**。其他类型的交付物可以使用 PDC 的 Explore、Preview、控制与委派模型，但这不表示它们已经拥有同等的正式工程保证。
+
+## 仓库内容
+
+| 路径 | 作用 |
+| --- | --- |
+| [`SKILL.md`](SKILL.md) | PDC 主入口与运行契约 |
+| [`references/`](references/) | 架构、权限、Explore/Preview/Engineering、评审、验收与恢复规则 |
+| [`scripts/`](scripts/) | 确定性的生命周期、验证、证据、恢复与公开验证工具 |
+| [`assets/`](assets/) | 项目模板与模型行为评估资产 |
+| [`PORTFOLIO.md`](PORTFOLIO.md) | 产品与工程案例说明 |
+| [`PUBLIC_VERIFICATION.md`](PUBLIC_VERIFICATION.md) | 独立运行的公开验证套件与命令 |
+| [`PUBLIC_RELEASE_SCOPE.md`](PUBLIC_RELEASE_SCOPE.md) | 公开版本包含与明确排除的内容 |
+
+## 验证
+
+这个公开版本包含确定性的包审计和 11 个可独立运行的公开自测。公开验证边界与内部开发过程使用的历史回归测试体系明确分离。
+
+请查看 [`PUBLIC_VERIFICATION.md`](PUBLIC_VERIFICATION.md) 了解精确的验证范围与运行命令。
+
+## 公开作品集版本
+
+本仓库是 PDC 成熟公开产品与运行时能力的精选快照。它有意排除未公开的项目状态、Git 历史、内部演进记录、运行证据与回归基础设施。
+
+它不是内部开发仓库的自动镜像。未来的公开更新必须经过单独审查和发布。
+
+本仓库未授予任何开源许可证。
