@@ -2,6 +2,31 @@
 
 本项目遵循语义化版本方向；Beta 阶段仍可能出现兼容性调整。
 
+## [0.1.0-beta.2] - 2026-09-02
+
+恢复完整、面向 Product Owner 的 PDC 产品叙事，并加入“整体 Outcome 优先于局部完美”的非协商控制原则。
+
+### Added
+
+- 全局 Outcome 检查：当前位置、路线贡献、决策充分阈值、可接受缺陷和停止/换路条件；
+- means-end inversion（手段替代目标）和实验标准无因升级检测；
+- Preview 的决策充分实验规则，明确允许有边界的粗略、人工、近似实验；
+- Writer Brain 实验室过度优化、测试体系替代产品目标、必要弯路和反复询问“做什么/到哪/为什么”四类针对性回归场景。
+
+### Changed
+
+- 恢复旧版 README 中更有吸引力的产品介绍、失控案例、Product Owner/PDC 分工、Coding Agent 区别、完整示例和适用人群；
+- 保留并整合现有五分钟快速开始、公开 CI、安全边界、贡献指南、发行说明、Public/Private 边界和 MIT License；
+- Strategic Workpath 不再把局部质量提升自动视为路线进展；
+- Preview 在达到决策充分证据后应停止完善实验室，而不是追求论文级或生产级完美。
+
+### Known limits
+
+- 本次行为回归新增的是显式针对性 delta，不冒充冻结完整行为目录的全套外部独立 PASS；
+- 真实首次用户、外部采用和社区成熟度证据仍在积累；
+- 当前严格正式 Engineering Profile 主要是 repository-backed Software/PDC；
+- Git/worktree 隔离不是恶意代码安全沙箱。
+
 ## [0.1.0-beta.1] - 2026-09-02
 
 首个正式开源 Beta。
