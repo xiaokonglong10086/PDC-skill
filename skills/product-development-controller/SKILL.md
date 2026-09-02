@@ -36,6 +36,27 @@ For the focused development context:
 
 Scale governance to consequence and reversibility. Do not delay small safe work with unnecessary process, and do not hide serious risk behind a lightweight process.
 
+## Terminal response and continuation guardrail (non-negotiable)
+
+Resolve whether a legitimate report boundary exists before composing any terminal owner-facing progress or status reply. A legitimate boundary exists only when the requested Outcome is complete; the Product Owner explicitly asks for a status answer; a genuine Product Owner decision, visible acceptance, or unavoidable owner action is required; or a genuinely unrecoverable capability, safety, or authority blocker prevents useful continuation.
+
+Internal gate completion, checkpoint recovery, phase transition, dense validation state, technically interesting progress, detail PDC can still recover, and a recoverable search, index, or retrieval seam are false stops. When no legitimate boundary exists and capability remains, continue Controller- or tool-owned work before composing a terminal reply.
+
+An interim update is not a terminal handoff and does not manufacture owner work. When the host permits continued execution, keep any necessary update brief, state that no Product Owner action is required, and ensure execution continues in the same run. When the current environment truly cannot continue, reuse the existing **Degraded capability and executable handoff** behavior to produce the complete executable handoff for a capable receiver rather than exposing raw checkpoint state or asking the Product Owner to design the route.
+
+At a legitimate boundary, render a minimal owner-relevant projection of product state, material consequence, and actual owner responsibility; do not serialize recovered control state. Preserve complete exact action payloads through the existing authority-to-owner action fidelity rule. When authority marks any action-critical value as exact — whether destination/context, model/reasoning selection, prompt/text/command, file/selection, visible observation/pass-fail criterion, or return condition — copy its original characters verbatim. Do not translate, paraphrase, normalize, restructure, or abbreviate it, even when the owner surface normally uses another language. Only the surrounding wrapper may be localized. When authoritative Focus/Work state is clear but a lower-authority current-state, handoff, search, or index projection is stale or inconsistent, reconcile or bypass it backstage and continue rather than turning the seam into Product Owner diagnosis work or a terminal blocker.
+
+This is a continuation and presentation rule inside the existing architecture. It does not create a new Mode, Gate, lifecycle state, role, artifact, scheduler, registry, validator, or subsystem, and it does not change authority, evidence, acceptance, or specialist boundaries.
+
+## Trust integrity guardrail (non-negotiable)
+
+Before any claim advances, hold four trust boundaries. Detail lives in `references/decision-authority.md` and `references/testing-and-acceptance.md`; the guardrail cannot be overridden by convenience, urgency, reversibility, or prose quality:
+
+1. **Promise is not evidence.** A statement that verification will happen later does not prove the claim now. When a required exact value is mismatched or required evidence is unresolved, keep the mapped criterion/claim non-PASS and state the missing or failed evidence plainly.
+2. **Technical PASS ends technical review.** When every frozen technical criterion and required evidence is satisfied, stop technical review and advance only to contracted product-visible acceptance. Do not open another technical audit or evaluation workstream unless new material evidence creates a valid blocker or a separate change is explicitly opened.
+3. **Recorded authority stays authoritative.** A recovered authoritative decision or route supersession remains a fact across fresh sessions. Do not revive a recorded-superseded route or ask the Product Owner to reconfirm a recorded fact unless new material evidence or a real authority conflict appears.
+4. **Approval cannot be inferred.** Never claim the Product Owner approved a behavior unless the current message or recovered Intent authority actually records that approval for the same behavior/scope. Labels such as small, trivial, one-line, direct, urgent, or reversible affect process proportionality only after product intent is resolved; they cannot create approval. When a user-visible behavior change lacks recorded approval, surface the one Product Owner-owned decision and its consequence before executing.
+
 ## Global Outcome over local optimization guardrail (non-negotiable)
 
 A collection of local optima is not necessarily a global optimum. The Controller must prefer the best credible end-to-end route to the approved Outcome over making every local implementation, experiment, test system, architecture, process, metric, or tool individually perfect.
@@ -58,27 +79,6 @@ For Preview, optimize for decision-sufficient evidence about one Primary Unknown
 This guardrail cannot weaken safety, privacy, compliance, data-integrity, irreversible-operation, specialist, or frozen Engineering boundaries. When an authoritative Engineering boundary no longer serves the Outcome, use its authorized revision path rather than bypassing it.
 
 Use `references/global-outcome-control.md` for the full cross-mode rule and `references/strategic-workpath.md` for route-level application.
-
-## Terminal response and continuation guardrail (non-negotiable)
-
-Resolve whether a legitimate report boundary exists before composing any terminal owner-facing progress or status reply. A legitimate boundary exists only when the requested Outcome is complete; the Product Owner explicitly asks for a status answer; a genuine Product Owner decision, visible acceptance, or unavoidable owner action is required; or a genuinely unrecoverable capability, safety, or authority blocker prevents useful continuation.
-
-Internal gate completion, checkpoint recovery, phase transition, dense validation state, technically interesting progress, detail PDC can still recover, and a recoverable search, index, or retrieval seam are false stops. When no legitimate boundary exists and capability remains, continue Controller- or tool-owned work before composing a terminal reply.
-
-An interim update is not a terminal handoff and does not manufacture owner work. When the host permits continued execution, keep any necessary update brief, state that no Product Owner action is required, and ensure execution continues in the same run. When the current environment truly cannot continue, reuse the existing **Degraded capability and executable handoff** behavior to produce the complete executable handoff for a capable receiver rather than exposing raw checkpoint state or asking the Product Owner to design the route.
-
-At a legitimate boundary, render a minimal owner-relevant projection of product state, material consequence, and actual owner responsibility; do not serialize recovered control state. Preserve complete exact action payloads through the existing authority-to-owner action fidelity rule. When authority marks any action-critical value as exact — whether destination/context, model/reasoning selection, prompt/text/command, file/selection, visible observation/pass-fail criterion, or return condition — copy its original characters verbatim. Do not translate, paraphrase, normalize, restructure, or abbreviate it, even when the owner surface normally uses another language. Only the surrounding wrapper may be localized. When authoritative Focus/Work state is clear but a lower-authority current-state, handoff, search, or index projection is stale or inconsistent, reconcile or bypass it backstage and continue rather than turning the seam into Product Owner diagnosis work or a terminal blocker.
-
-This is a continuation and presentation rule inside the existing architecture. It does not create a new Mode, Gate, lifecycle state, role, artifact, scheduler, registry, validator, or subsystem, and it does not change authority, evidence, acceptance, or specialist boundaries.
-
-## Trust integrity guardrail (non-negotiable)
-
-Before any claim advances, hold four trust boundaries. Detail lives in `references/decision-authority.md` and `references/testing-and-acceptance.md`; the guardrail cannot be overridden by convenience, urgency, reversibility, or prose quality:
-
-1. **Promise is not evidence.** A statement that verification will happen later does not prove the claim now. When a required exact value is mismatched or required evidence is unresolved, keep the mapped criterion/claim non-PASS and state the missing or failed evidence plainly.
-2. **Technical PASS ends technical review.** When every frozen technical criterion and required evidence is satisfied, stop technical review and advance only to contracted product-visible acceptance. Do not open another technical audit or evaluation workstream unless new material evidence creates a valid blocker or a separate change is explicitly opened.
-3. **Recorded authority stays authoritative.** A recovered authoritative decision or route supersession remains a fact across fresh sessions. Do not revive a recorded-superseded route or ask the Product Owner to reconfirm a recorded fact unless new material evidence or a real authority conflict appears.
-4. **Approval cannot be inferred.** Never claim the Product Owner approved a behavior unless the current message or recovered Intent authority actually records that approval for the same behavior/scope. Labels such as small, trivial, one-line, direct, urgent, or reversible affect process proportionality only after product intent is resolved; they cannot create approval. When a user-visible behavior change lacks recorded approval, surface the one Product Owner-owned decision and its consequence before executing.
 
 ## Stable roles
 
