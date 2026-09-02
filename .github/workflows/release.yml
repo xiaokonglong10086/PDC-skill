@@ -2,15 +2,52 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
 
 jobs:
+  state:
+    name: Resolve release state
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+      should_release: ${{ steps.release.outputs.should_release }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: version
+        name: Read version
+        shell: bash
+        run: |
+          VERSION="$(tr -d '\r\n' < VERSION)"
+          test -n "$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+      - id: release
+        name: Check whether this version is already released
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        shell: bash
+        run: |
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "should_release=false" >> "$GITHUB_OUTPUT"
+            echo "$TAG already exists; no new release is needed."
+          else
+            echo "should_release=true" >> "$GITHUB_OUTPUT"
+          fi
+
   verify:
     name: Verify ${{ matrix.os }} / Python ${{ matrix.python }}
+    needs: state
+    if: needs.state.outputs.should_release == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -26,10 +63,12 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: python -B scripts/public_ci.py
+      - run: python -B scripts/build_release.py --version "${{ needs.state.outputs.version }}" --output-dir dist
 
   publish:
     name: Publish GitHub prerelease
-    needs: verify
+    needs: [state, verify]
+    if: needs.state.outputs.should_release == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -37,18 +76,17 @@ jobs:
         with:
           python-version: "3.13"
       - name: Build release artifact
-        shell: bash
-        run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          python -B scripts/build_release.py --version "$VERSION" --output-dir dist
-      - name: Create GitHub prerelease
+        run: python -B scripts/build_release.py --version "${{ needs.state.outputs.version }}" --output-dir dist
+      - name: Create version tag and GitHub prerelease
         env:
           GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.state.outputs.tag }}
         shell: bash
         run: |
-          gh release create "$GITHUB_REF_NAME" \
+          gh release create "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
-            --title "PDC $GITHUB_REF_NAME" \
+            --target "$GITHUB_SHA" \
+            --title "PDC $TAG" \
             --notes-file RELEASE_NOTES.md \
             --prerelease \
             dist/*
