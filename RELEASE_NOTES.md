@@ -1,33 +1,33 @@
-# PDC v0.1.0-beta.2
+# PDC v0.1.0-beta.3
 
-这个版本修复了一个很典型的局部最优问题：为了完成“成熟开源项目”的标准化清单，上一版 README 保留了安装、验证、许可证等必要信息，却替换掉了原来最能解释 PDC 为什么重要的产品叙事。
+这个版本解决一个直接影响采用的问题：PDC 的公开仓库虽然把自己描述为围绕 ChatGPT、Codex、Claude Code、Cursor 等工具工作的控制层，但实际快速开始此前只提供 Codex Desktop 安装路径。
 
-v0.1.0-beta.2 把两者重新合并：旧版的吸引力和问题意识被恢复，开源项目所需的快速开始、CI、安全、贡献、发行和许可证信息全部保留。
-
-同时，PDC 加入一条非协商原则：
-
-> **所有局部最优加起来并不一定是整体最优。PDC 必须优先守住最终 Outcome 和可信的端到端路线。**
+v0.1.0-beta.3 把**同一份 PDC Agent Skill**扩展到多个宿主的真实安装入口，同时严格区分“原生支持、有限兼容、格式可移植”和“已经资格验证”的含义。
 
 ## 主要变化
 
-- 恢复完整的 PDC 产品介绍、AI 开发失控案例、Product Owner/PDC 分工、与 Coding Agent 的区别、完整工作示例和适用人群；
-- 保留五分钟快速开始、Linux/Windows/macOS × Python 3.11/3.12/3.13 CI、CodeQL、安全边界、贡献指南、Public/Private 边界和 MIT License；
-- 每次材料性局部优化前，要求检查 Outcome、当前位置、路线贡献、决策充分阈值、可接受缺陷和停止/换路条件；
-- 检测 means-end inversion：实验、实验室、测试体系、架构、流程、指标或工具被当成产品本身来完善；
-- Preview 不再默认追求论文级或生产级实验环境，而是追求能够支持实际产品决定的最低可信证据；
-- 明确允许必要的弯路、人工步骤、近似和局部不优秀，只要它们是更好整体路线的一部分、限制清晰且有停止条件；
-- 新增 Writer Brain 实验室过度优化等四类针对性模型行为回归场景。
+- 新增统一的 `pdc_install.py`，可安装/检查 Codex Desktop、Claude Code、Cursor、GitHub Copilot；
+- Claude Code、Cursor、GitHub Copilot 支持用户级和项目级 Agent Skill 安装；
+- ChatGPT Business / Enterprise / Healthcare / Edu 提供原生 Skills 上传路径；
+- ChatGPT 托管工作区可以从 GitHub 导入 PDC skill-only plugin marketplace；
+- 对没有原生 Skills 的个人 ChatGPT 账户提供明确标注的 Project 兼容模式，而不是伪装成原生安装；
+- 每个 Release 新增独立 `pdc-agent-skill-<version>.zip` 与 SHA-256，便于 ChatGPT Skills 上传和 Agent Skills 兼容宿主安装；
+- 公共 CI 新增 Claude Code / Cursor / Copilot user + project 安装与 doctor，以及 marketplace / portable package 契约检查；
+- 原有 Codex `pdc_first_run.py install / doctor / demo` 全部保留。
 
-## 一个关键例子
+## 为什么不是“一套脚本假装支持所有 AI”
 
-如果 Writer Brain 当前只是想粗略判断一种写作协作方式有没有潜力，PDC 不应为了得到“完美结论”不断修建实验室、提高标准，然后因为理想环境不可得就宣布产品方向不可行。
+宿主能力不同。PDC 因此只复用同一核心 Skill，不强行把所有平台说成同等级：
 
-正确做法是：冻结这次 Preview 真正要回答的一个问题，选择足以回答它的最低可信实验，明确允许的缺陷和限制；证据已经足以支持下一步决定时，就停止完善实验环境。
+- 有原生 Agent Skills / plugin 能力的宿主，使用其原生入口；
+- ChatGPT 个人账户没有原生 Skills 时，只提供 Project 兼容模式；
+- 没有真实 repository/runtime 工具时，不声称获得 strict Software/PDC Engineering 的 Git、独立验证、集成与关闭保证；
+- 对其他遵循 Agent Skills 格式的宿主，只提供 portable artifact，不自动宣称已资格验证。
 
 ## 当前不宣称
 
-- 不宣称已经完成真实首次用户或外部采用验证；
-- 不把针对性行为场景描述成冻结完整目录的独立全套 PASS；
-- 不宣称所有 Agent/宿主都有相同支持等级；
-- 不宣称 Skills / Agents / automation 已拥有 Software/PDC 同等级严格 Engineering Profile；
-- 不把 Git/worktree 隔离描述成安全沙箱。
+- 不宣称所有 ChatGPT 账户都能创建或上传原生 Skills；
+- 不宣称普通 ChatGPT Project 与 fully-tooled repository-backed PDC host 等价；
+- 不把静态 CI 安装落点验证冒充真实 Claude Code / Cursor / Copilot 交互行为验证；
+- 不宣称所有 Agent Skills 兼容宿主都有相同支持等级；
+- 不宣称已经完成真实首次用户、外部采用或社区成熟度验证。
