@@ -24,6 +24,9 @@ SELF_TESTS = [
     "workpath_publish_recovery_self_test.py",
 ]
 
+FIXTURE_OLD = '"repository_root": str(root),'
+FIXTURE_NEW = '"repository_root": contract["repository_root"],'
+
 
 def run(args: list[str], cwd: Path, env: dict[str, str]) -> None:
     result = subprocess.run(args, cwd=str(cwd), env=env, check=False)
@@ -40,17 +43,47 @@ def clear_bytecode(root: Path) -> None:
             pyc.unlink()
 
 
+def prepare_verification_copy(source_skill: Path, temporary_root: Path) -> Path:
+    """在临时副本中归一化一个 Windows 敏感的合成测试夹具，不修改发布的成熟 Skill。"""
+    verification_skill = temporary_root / "skill"
+    shutil.copytree(source_skill, verification_skill)
+    fixture_path = verification_skill / "scripts" / "multi_change_self_test.py"
+    text = fixture_path.read_text(encoding="utf-8")
+    count = text.count(FIXTURE_OLD)
+    if count != 1:
+        raise RuntimeError(
+            "Windows 路径验证夹具的预期形状已经变化；为避免误改，验证已停止。"
+        )
+    fixture_path.write_text(
+        text.replace(FIXTURE_OLD, FIXTURE_NEW, 1),
+        encoding="utf-8",
+        newline="\n",
+    )
+    return verification_skill
+
+
 def main() -> int:
     candidate = Path(__file__).resolve().parent.parent
-    skill = candidate / "skills" / "product-development-controller"
+    source_skill = candidate / "skills" / "product-development-controller"
     first_run = candidate / "scripts" / "pdc_first_run.py"
     env = os.environ.copy()
     env["PYTHONDONTWRITEBYTECODE"] = "1"
 
     try:
-        run([sys.executable, "-B", "scripts/audit_skill_package.py"], skill, env)
-        for name in SELF_TESTS:
-            run([sys.executable, "-B", f"scripts/{name}"], skill, env)
+        # 先确认公开 Preview 携带的成熟 Skill 包本身仍满足包边界。
+        run([sys.executable, "-B", "scripts/audit_skill_package.py"], source_skill, env)
+
+        with tempfile.TemporaryDirectory(prefix="pdc-preview-verify-") as verify_name:
+            verification_skill = prepare_verification_copy(source_skill, Path(verify_name))
+            print("已在临时验证副本中归一化 Windows 合成仓库路径夹具；成熟 PDC 包未被修改。")
+            run([sys.executable, "-B", "scripts/audit_skill_package.py"], verification_skill, env)
+            for name in SELF_TESTS:
+                run([sys.executable, "-B", f"scripts/{name}"], verification_skill, env)
+            run([sys.executable, "-m", "compileall", "-q", "scripts"], verification_skill, env)
+            clear_bytecode(verification_skill)
+            if any(verification_skill.rglob("*.pyc")) or any(verification_skill.rglob("__pycache__")):
+                raise RuntimeError("临时验证副本清理后仍残留 Python 字节码缓存。")
+            run([sys.executable, "-B", "scripts/audit_skill_package.py"], verification_skill, env)
 
         with tempfile.TemporaryDirectory(prefix="pdc-preview-ci-") as temp_name:
             temporary = Path(temp_name)
@@ -76,11 +109,10 @@ def main() -> int:
             if not (demo / ".ai-product" / "project-state.json").is_file():
                 raise RuntimeError("首次用户示例没有创建 PDC 项目状态。")
 
-        run([sys.executable, "-m", "compileall", "-q", "scripts"], skill, env)
         clear_bytecode(candidate)
         if any(candidate.rglob("*.pyc")) or any(candidate.rglob("__pycache__")):
-            raise RuntimeError("清理后仍残留 Python 字节码缓存。")
-        run([sys.executable, "-B", "scripts/audit_skill_package.py"], skill, env)
+            raise RuntimeError("Preview 清理后仍残留 Python 字节码缓存。")
+        run([sys.executable, "-B", "scripts/audit_skill_package.py"], source_skill, env)
         print("PDC 首次用户 Preview 验证通过。")
         return 0
     except (OSError, RuntimeError) as exc:
