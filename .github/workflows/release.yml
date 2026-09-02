@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python }}
-      - run: python -B scripts/public_preview_ci.py
+      - run: python -B scripts/public_ci.py
 
   publish:
     name: Publish GitHub prerelease
