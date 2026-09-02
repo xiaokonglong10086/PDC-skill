@@ -16,32 +16,43 @@ AI 已经很会写代码、做原型、改 Bug。
 
 它可能把一个用于简单预览的实验，逐步升级成近乎论文级的实验室；把测试体系、架构、流程或工具打磨得非常严密，却迟迟没有回答真正的产品问题。每一步单独看都合理，所有局部最优加在一起，却未必得到整体最优。
 
-**PDC 不是另一个 Coding Agent。它是围绕 ChatGPT、Codex、Claude Code、Cursor 等执行工具的产品开发控制层。**
+**PDC 不是另一个 Coding Agent。它是围绕 ChatGPT、Codex、Claude Code、Cursor、GitHub Copilot 等执行工具的产品开发控制层。**
 
 你继续负责产品：目标、用户体验、优先级、关键取舍和最终验收。  
 PDC 负责把复杂的开发过程控制住：恢复上下文、选择正确路线、守住当前焦点、判断证据是否足够、冻结正式开发的完成标准、独立验证结果，并让中断后的工作可以继续，而不是把 Git、日志和恢复问题扔给 Product Owner。
 
-当前公开版本：**v0.1.0-beta.2**。这是可公开安装和使用的 Beta；公开技术验证已经自动化，但真实首次用户和外部采用证据仍在积累，因此不会把 Beta 描述成已经完成外部验证的稳定版。
+当前公开版本：**v0.1.0-beta.3**。这是可公开安装和使用的 Beta；公开技术验证已经自动化，但真实首次用户和外部采用证据仍在积累，因此不会把 Beta 描述成已经完成外部验证的稳定版。
 
 ## 5 分钟开始
 
-需要：
+PDC 现在提供明确路径给：
 
-- Git；
-- Python 3.11+；
-- Codex Desktop（当前公开安装路径）。
+- **ChatGPT**：符合条件的托管工作区可原生上传 Skill 或从 GitHub 导入 PDC plugin；个人账户使用明确标注的 Project 兼容模式；
+- **Codex Desktop**：原生 plugin；
+- **Claude Code / Cursor / GitHub Copilot**：原生 Agent Skill 文件落点。
+
+本地 Agent 宿主需要 Git 和 Python 3.11+：
 
 ```bash
 git clone https://github.com/xiaokonglong10086/PDC-skill.git
 cd PDC-skill
-python scripts/pdc_first_run.py install
-python scripts/pdc_first_run.py doctor
-python scripts/pdc_first_run.py demo
+python scripts/pdc_install.py targets
 ```
 
-Windows 如果 `python` 不可用，可以把上面的 `python` 换成 `py`。
+然后选择宿主：
 
-更完整的首次使用说明见 [`START_HERE.md`](START_HERE.md)。
+```bash
+python scripts/pdc_install.py install --target codex
+python scripts/pdc_install.py install --target claude-code
+python scripts/pdc_install.py install --target cursor
+python scripts/pdc_install.py install --target copilot
+```
+
+检查安装时把 `install` 换成 `doctor` 即可。
+
+ChatGPT 原生 Skills 用户可以直接从 GitHub Release 下载 `pdc-agent-skill-<version>.zip` 上传，不需要运行本地安装脚本。
+
+**不同宿主不代表相同保证等级。**完整 ChatGPT 步骤、user/project scope、宿主支持矩阵和能力边界见 [`docs/INSTALLATION.md`](docs/INSTALLATION.md)。最短首次使用流程见 [`START_HERE.md`](START_HERE.md)。
 
 ## AI 产品开发是怎么失控的
 
@@ -86,7 +97,7 @@ PDC 控制的是周围更难、也更容易失控的问题：
 
 > **“现在最应该做什么？为什么？它怎样服务最终结果？需要做到多好才足够？什么时候才算真的完成？谁来证明？中断后还能不能可靠地继续？”**
 
-所以 PDC 不替代 Codex、Claude Code、Cursor 或其他执行工具。  
+所以 PDC 不替代 Codex、Claude Code、Cursor、GitHub Copilot 或其他执行工具。  
 它让这些工具可以更自主地工作，**但不会因此获得修改产品目标、批准自己、悄悄扩大范围，或者把技术复杂度转嫁给 Product Owner 的权力。**
 
 ## 整体最优优先，而不是每个局部都完美
@@ -217,7 +228,7 @@ Explore / Preview / Engineering
 
 PDC 特别适合：
 
-- 正在用 ChatGPT、Codex、Claude Code、Cursor 等工具做真实产品的非技术或弱技术 Product Owner；
+- 正在用 ChatGPT、Codex、Claude Code、Cursor、GitHub Copilot 等工具做真实产品的非技术或弱技术 Product Owner；
 - 已经无法靠一段 Prompt 和聊天记忆维持一致性的长期 AI 开发；
 - 同时存在原型、实验、正式开发、多个新想法，开始容易混在一起的项目；
 - 发现 AI 很会完成局部任务，却需要有人持续守住最终目标和整体路线的项目；
@@ -230,6 +241,8 @@ PDC 的控制模型可用于软件、Skills、Agents、自动化/工作流、原
 
 当前完整实现的严格正式 Engineering Profile 是仓库型 **Software/PDC**。其他交付类型可以使用 Explore、Preview、控制、证据和委派模型，但本项目不会声称它们已经拥有同等级的正式 Engineering 保证。
 
+宿主支持也必须按真实能力解释：原生 Skill/plugin、portable Agent Skill 和 ChatGPT Project 兼容模式并不自动拥有相同 repository/runtime 工具。因此，没有实际 Git、测试、独立验证或集成能力的宿主不能仅因为加载了 PDC 文本就宣称 strict Software/PDC Engineering PASS。
+
 另外，PDC 的 Git/worktree 隔离**不是安全沙箱**。不要用冻结测试命令执行不可信代码。安全边界见 [`SECURITY.md`](SECURITY.md)。
 
 ## 公开验证
@@ -240,9 +253,11 @@ PDC 的控制模型可用于软件、Skills、Agents、自动化/工作流、原
 - Python 3.11 / 3.12 / 3.13；
 - 公开包边界审计；
 - 11 项确定性自测；
-- 安装、doctor、虚构 demo；
+- Codex 安装、doctor 与虚构 demo；
+- Claude Code / Cursor / GitHub Copilot 的 user + project Agent Skill 安装与 doctor；
+- ChatGPT/Codex plugin marketplace 静态契约检查；
 - Python 编译检查；
-- Release 包构建。
+- 完整 Release 包与 portable Agent Skill 包构建。
 
 详细范围见 [`PUBLIC_VERIFICATION.md`](PUBLIC_VERIFICATION.md)。
 
@@ -253,7 +268,9 @@ PDC 的控制模型可用于软件、Skills、Agents、自动化/工作流、原
 | [`skills/product-development-controller/SKILL.md`](skills/product-development-controller/SKILL.md) | PDC Skill 主入口 |
 | [`skills/product-development-controller/references/`](skills/product-development-controller/references/) | 架构、权威、模式、评审、验收与恢复规则 |
 | [`skills/product-development-controller/scripts/`](skills/product-development-controller/scripts/) | 生命周期、证据、验证和恢复工具 |
-| [`scripts/`](scripts/) | 公开安装、首次运行、CI 与发行工具 |
+| [`scripts/`](scripts/) | 多宿主安装、首次运行、CI 与发行工具 |
+| [`docs/INSTALLATION.md`](docs/INSTALLATION.md) | ChatGPT / Codex / Claude Code / Cursor / Copilot 安装矩阵与能力边界 |
+| [`compat/chatgpt-project/`](compat/chatgpt-project/) | 没有原生 Skills 的 ChatGPT Project 有限兼容适配 |
 | [`examples/`](examples/) | 完全使用虚构数据的示例 |
 | [`PUBLIC_VERIFICATION.md`](PUBLIC_VERIFICATION.md) | 可重复的公开验证范围 |
 | [`PUBLIC_RELEASE_SCOPE.md`](PUBLIC_RELEASE_SCOPE.md) | Public / Private 边界 |
@@ -273,10 +290,11 @@ PDC 的控制模型可用于软件、Skills、Agents、自动化/工作流、原
 
 ## 发布与版本
 
+- `v0.1.0-beta.3`：新增 ChatGPT、Claude Code、Cursor、GitHub Copilot 的明确安装/兼容路径，并发布 portable PDC Agent Skill 包；
 - `v0.1.0-beta.2`：恢复完整产品叙事，并加入“全局结果优先于局部完美”的控制原则；
 - `v0.1.0-beta.1`：首个正式开源 Beta；
 - 标签发行必须先通过与 PR 相同的公开验证矩阵；
-- GitHub Release 会附带可下载 ZIP 和 SHA-256；
+- GitHub Release 会附带完整 PDC ZIP、portable Agent Skill ZIP 及对应 SHA-256；
 - 变更记录见 [`CHANGELOG.md`](CHANGELOG.md)；
 - 后续方向见 [`ROADMAP.md`](ROADMAP.md)。
 
