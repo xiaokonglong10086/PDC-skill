@@ -1,0 +1,27 @@
+name: Feature request
+description: 提议一个有明确产品结果的新能力
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / opportunity
+      description: 先描述问题，不要只描述想实现的方案。
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: 什么可观察结果会说明这个问题被解决？
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current workaround
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Important constraints or risks

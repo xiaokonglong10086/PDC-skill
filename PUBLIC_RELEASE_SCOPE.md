@@ -2,24 +2,24 @@
 
 ## Included
 
-- The mature PDC Skill contract
-- Stable product, workflow, authority, review, and recovery references
-- Deterministic lifecycle and validation scripts
-- Public package auditing and standalone public self-tests
-- Project templates and model-behavior evaluation assets
-- Portfolio-facing documentation
+- PDC Skill 主运行契约；
+- 稳定的产品、工作流、权威、评审与恢复参考；
+- 确定性的生命周期与验证脚本；
+- 项目模板和模型行为评估资产；
+- Codex Desktop 本地安装 / doctor / demo；
+- 公开 CI 与发行工具；
+- 开源治理、贡献、安全和支持文档；
+- MIT License。
 
 ## Excluded
 
-- Private project state and Workpaths
-- Private Control Decisions, reviews, acceptance, integration, logs, receipts, and capsules
-- Private Git history and repository references
-- Internal evolution and quality-upgrade notes
-- Private-history, private-authority, and state-bound regression harnesses
-- Personal data, credentials, local paths, and unfinished private work
-- An open-source license
+- 私有项目状态和 Workpaths；
+- 私有 Control Decisions、reviews、acceptance、integration、logs、receipts 和 capsules；
+- 私有 Git 历史和真实项目仓库引用；
+- 内部演进/质量升级记录；
+- 依赖私有历史、私有权威或真实状态的内部回归基础设施；
+- 个人数据、凭证、本地私人路径和未完成私有工作。
 
 ## Update policy
 
-No automatic sync from private PDC. Only separately reviewed mature public releases.
-
+公开仓库不自动从私有 PDC 同步。只有经过单独审查、公开验证和版本化发行的内容进入 `main`。

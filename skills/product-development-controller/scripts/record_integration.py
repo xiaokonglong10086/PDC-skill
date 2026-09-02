@@ -72,6 +72,13 @@ def _cleanup_process_group(pgid: int, *, grace_seconds: float = 0.2) -> None:
         os.killpg(pgid, signal.SIGKILL)
     except ProcessLookupError:
         return
+    except PermissionError:
+        # Darwin hosted runners can report EPERM here after SIGTERM has already
+        # torn down the signalable members of this newly-created process group.
+        # Do not turn that teardown race into a validator crash. The isolation
+        # regression test still independently proves the recorded descendant PID
+        # is no longer running, so this cannot convert a leaked process into PASS.
+        return
 
 
 # ---------------------------------------------------------------------------

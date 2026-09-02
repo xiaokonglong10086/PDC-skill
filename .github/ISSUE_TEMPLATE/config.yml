@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security issue
+    url: https://github.com/xiaokonglong10086/PDC-skill/security
+    about: 安全漏洞请优先使用私密报告渠道，不要公开披露利用细节。
