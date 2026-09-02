@@ -1,14 +1,14 @@
 {
   "name": "pdc",
-  "version": "0.1.0-preview.1-zh",
+  "version": "0.1.0-beta.1",
   "description": "让长期 AI 产品开发保持聚焦、可验证、可恢复。",
   "author": {
     "name": "xiaokonglong10086",
     "url": "https://github.com/xiaokonglong10086"
   },
-  "homepage": "https://github.com/xiaokonglong10086/PDC-skill/tree/preview/first-user-v1-zh",
+  "homepage": "https://github.com/xiaokonglong10086/PDC-skill",
   "repository": "https://github.com/xiaokonglong10086/PDC-skill",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "keywords": [
     "product-development",
     "ai-agents",
@@ -28,9 +28,9 @@
       "Read",
       "Write"
     ],
-    "websiteURL": "https://github.com/xiaokonglong10086/PDC-skill/tree/preview/first-user-v1-zh",
-    "privacyPolicyURL": "https://github.com/xiaokonglong10086/PDC-skill/blob/preview/first-user-v1-zh/PREVIEW_PRIVACY.md",
-    "termsOfServiceURL": "https://github.com/xiaokonglong10086/PDC-skill/blob/preview/first-user-v1-zh/PREVIEW_TERMS.md",
+    "websiteURL": "https://github.com/xiaokonglong10086/PDC-skill",
+    "privacyPolicyURL": "https://github.com/xiaokonglong10086/PDC-skill/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/xiaokonglong10086/PDC-skill/blob/main/TERMS.md",
     "defaultPrompt": [
       "请恢复这个项目，告诉我现在唯一应该推进的工作和下一步。",
       "请判断当前应该 Explore、Preview 还是 Engineering，并给出下一步。",
