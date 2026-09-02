@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""运行 PDC 首次用户 Preview 的完整确定性验证。"""
+"""运行 PDC 公开发行候选的完整确定性验证。"""
 
 from __future__ import annotations
 
@@ -70,10 +70,10 @@ def main() -> int:
     env["PYTHONDONTWRITEBYTECODE"] = "1"
 
     try:
-        # 先确认公开 Preview 携带的成熟 Skill 包本身仍满足包边界。
+        # 先确认公开候选携带的成熟 Skill 包本身仍满足包边界。
         run([sys.executable, "-B", "scripts/audit_skill_package.py"], source_skill, env)
 
-        with tempfile.TemporaryDirectory(prefix="pdc-preview-verify-") as verify_name:
+        with tempfile.TemporaryDirectory(prefix="pdc-public-verify-") as verify_name:
             verification_skill = prepare_verification_copy(source_skill, Path(verify_name))
             print("已在临时验证副本中归一化 Windows 合成仓库路径夹具；成熟 PDC 包未被修改。")
             run([sys.executable, "-B", "scripts/audit_skill_package.py"], verification_skill, env)
@@ -85,7 +85,7 @@ def main() -> int:
                 raise RuntimeError("临时验证副本清理后仍残留 Python 字节码缓存。")
             run([sys.executable, "-B", "scripts/audit_skill_package.py"], verification_skill, env)
 
-        with tempfile.TemporaryDirectory(prefix="pdc-preview-ci-") as temp_name:
+        with tempfile.TemporaryDirectory(prefix="pdc-public-ci-") as temp_name:
             temporary = Path(temp_name)
             home = temporary / "home"
             demo = temporary / "demo"
@@ -107,13 +107,13 @@ def main() -> int:
                 env,
             )
             if not (demo / ".ai-product" / "project-state.json").is_file():
-                raise RuntimeError("首次用户示例没有创建 PDC 项目状态。")
+                raise RuntimeError("虚构示例没有创建 PDC 项目状态。")
 
         clear_bytecode(candidate)
         if any(candidate.rglob("*.pyc")) or any(candidate.rglob("__pycache__")):
-            raise RuntimeError("Preview 清理后仍残留 Python 字节码缓存。")
+            raise RuntimeError("公开候选清理后仍残留 Python 字节码缓存。")
         run([sys.executable, "-B", "scripts/audit_skill_package.py"], source_skill, env)
-        print("PDC 首次用户 Preview 验证通过。")
+        print("PDC 公开发行候选验证通过。")
         return 0
     except (OSError, RuntimeError) as exc:
         print(f"错误：{exc}", file=sys.stderr)
