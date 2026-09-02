@@ -8,8 +8,11 @@ PDC uses this evaluation layer to detect model-behavior regressions against an a
 - Frozen SHA-256: `60657356693d610ede67a12aa8bc564c5791338ca23fa1474d22a02dc5aba82a`
 - Versioned catalog: `assets/evals/model-behavior-scenarios.v1.json`
 - Stable suites: `operating-model-v1` (G-01..G-19) and `stable-v4.2` (S-01..S-24)
+- Targeted global-outcome behavior delta: `assets/evals/global-outcome-control-scenarios.v1.md` (GO-01..GO-04)
 
 The catalog is the scoring baseline. A run may record a proposed improvement in `suggested_delta`, but may not redefine expected behavior. Changing approved behavior requires a separately approved versioned Baseline + Delta.
+
+The targeted global-outcome delta is explicit supplemental coverage for a newly approved behavior change. It does not silently mutate the frozen v1 JSON catalog or make a targeted run a full-suite PASS. A later catalog revision may incorporate equivalent scenarios only through an explicitly versioned baseline update.
 
 ## Execution topology
 
@@ -53,6 +56,19 @@ The packet contains:
 - `SHA256SUMS.txt`: checksums for packet files.
 
 For blind execution, give the tested session the subject material and `execution/` inputs first. Do not expose the evaluator rubric until responses have been captured.
+
+## Targeted supplemental delta execution
+
+Until `GO-01..GO-04` are incorporated into a later versioned JSON catalog, execute `assets/evals/global-outcome-control-scenarios.v1.md` as a separate targeted semantic evaluation:
+
+1. bind the run to the exact PDC commit under review;
+2. present each scenario input without its expected behavior or failure condition;
+3. preserve the response transcript bytes and SHA-256;
+4. have the evaluator judge exactly `PASS`, `FAIL`, or `EVIDENCE_MISSING` against the hidden scenario section;
+5. retain evaluator identity, assurance class, exact commit, transcript binding, limitations, and the aggregate targeted result;
+6. report the aggregate as `PARTIAL` when every selected scenario passes, never as full baseline PASS.
+
+A Controller self-check is useful regression evidence but remains non-independent. A fresh external session or human may provide stronger attested evidence under the existing assurance-class rules.
 
 ## Assurance classes
 
