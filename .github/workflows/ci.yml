@@ -27,6 +27,6 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Verify public package and first-run path
-        run: python -B scripts/public_preview_ci.py
+        run: python -B scripts/public_ci.py
       - name: Build release artifact
         run: python -B scripts/build_release.py --output-dir dist
