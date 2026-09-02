@@ -86,6 +86,9 @@ def destination_for(
 
 
 def run_codex(command: str, args: argparse.Namespace) -> int:
+    if args.scope != "user":
+        print("PDC 安装失败：Codex 当前公开安装路径只支持 user scope。", file=sys.stderr)
+        return 2
     script = release_root() / "scripts" / "pdc_first_run.py"
     cmd = [sys.executable, "-B", str(script), command]
     if args.home:
