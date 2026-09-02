@@ -2,6 +2,34 @@
 
 本项目遵循语义化版本方向；Beta 阶段仍可能出现兼容性调整。
 
+## [0.1.0-beta.3] - 2026-09-02
+
+把 PDC 从“公开安装入口只有 Codex Desktop”扩展为一套有明确能力边界的多宿主安装方案。
+
+### Added
+
+- `scripts/pdc_install.py`：统一安装/检查 Codex、Claude Code、Cursor、GitHub Copilot；
+- Claude Code、Cursor、GitHub Copilot 的 user / project Agent Skill 安装路径；
+- ChatGPT Business / Enterprise / Healthcare / Edu 原生 Skills 上传说明；
+- ChatGPT 托管工作区从 GitHub 导入 PDC skill-only plugin marketplace 的说明与 `.agents/plugins/marketplace.json`；
+- 没有原生 Skills 的个人 ChatGPT 账户 Project 兼容适配，并明确其能力低于 fully-tooled repository-backed Engineering；
+- `pdc-agent-skill-<version>.zip` portable Agent Skill Release 包及 SHA-256；
+- 多宿主安装器、marketplace 结构和 portable package 的公开确定性验证。
+
+### Changed
+
+- `START_HERE.md` 和 README 不再把 Codex Desktop 写成唯一公开入口；
+- 保留原 `pdc_first_run.py install / doctor / demo`，避免破坏既有 Codex 用户路径；
+- 完整 Release ZIP 现在包含 ChatGPT marketplace、兼容适配与多宿主安装文档；
+- 对“格式兼容”和“已经资格验证支持”进行明确区分。
+
+### Known limits
+
+- ChatGPT 原生 Skills 与 plugin marketplace 可用性由账户计划、工作区设置、角色和产品 rollout 决定；
+- 个人 ChatGPT Project 兼容模式不是原生 Skill，也不提供 Software/PDC 同等级 repository-backed Engineering 保证；
+- Claude Code / Cursor / Copilot 的 CI 验证覆盖安装落点和 PDC 包完整性，不冒充真实宿主交互行为验证；
+- 其他 Agent Skills 兼容宿主没有自动获得 PDC 的资格验证声明。
+
 ## [0.1.0-beta.2] - 2026-09-02
 
 恢复完整、面向 Product Owner 的 PDC 产品叙事，并加入“整体 Outcome 优先于局部完美”的非协商控制原则。

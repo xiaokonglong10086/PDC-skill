@@ -20,10 +20,17 @@ Tag Release 会再次运行相同矩阵。
 2. 11 项 retained standalone self-tests；
 3. Python 编译检查；
 4. Codex Desktop 本地安装到隔离测试 home；
-5. `doctor --json`；
-6. 完全虚构 demo 创建；
+5. Codex `doctor --json`；
+6. 完全虚构 Codex demo 创建；
 7. `.ai-product/project-state.json` 生成；
-8. Release ZIP 构建。
+8. Claude Code user / project Agent Skill 安装与 doctor；
+9. Cursor user / project Agent Skill 安装与 doctor；
+10. GitHub Copilot user / project Agent Skill 安装与 doctor；
+11. ChatGPT / Codex 共用 plugin marketplace 的结构、skill-only 边界与根目录 source 校验；
+12. 完整 PDC Release ZIP 构建；
+13. portable `product-development-controller` Agent Skill ZIP 构建及 SHA-256。
+
+ChatGPT 原生 Skills 上传、工作区 GitHub marketplace 导入和个人 Project 兼容模式依赖真实 ChatGPT 账户/工作区能力，因此 CI 只验证可发布的 Skill/plugin 载体与静态契约，不伪造线上安装成功证据。
 
 ## 11 项 retained self-tests
 
@@ -52,6 +59,8 @@ python scripts/build_release.py --output-dir dist
 ## 证据边界
 
 - CI PASS 证明公开候选在声明矩阵上通过当前确定性验证；
+- CI PASS 证明 Claude Code / Cursor / Copilot 的声明文件落点能够被当前安装器正确生成并通过 PDC 包审计，但不替代真实宿主运行证据；
+- CI PASS 不证明 ChatGPT 工作区一定向某个账户开放 Skills 或 plugin import；
 - CI PASS 不证明首次用户一定能理解或顺利使用；
 - CI PASS 不证明恶意代码可以安全执行；
 - CI PASS 不等于 Product Owner 对某个具体产品项目的验收；

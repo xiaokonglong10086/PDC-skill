@@ -1,0 +1,20 @@
+{
+  "name": "pdc",
+  "interface": {
+    "displayName": "PDC Product Development Controller"
+  },
+  "plugins": [
+    {
+      "name": "pdc",
+      "source": {
+        "source": "local",
+        "path": "."
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
