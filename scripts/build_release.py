@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a deterministic public PDC release ZIP and SHA-256 file."""
+"""Build deterministic public PDC release and portable Agent Skills archives."""
 
 from __future__ import annotations
 
@@ -13,12 +13,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_JSON = ROOT / ".codex-plugin" / "plugin.json"
+SKILL_NAME = "product-development-controller"
 INCLUDE = [
+    ".agents",
     ".codex-plugin",
     "skills",
     "scripts",
     "examples",
     "docs",
+    "compat",
     "README.md",
     "START_HERE.md",
     "LICENSE",
@@ -53,7 +56,7 @@ def should_include(path: Path) -> bool:
     return not any(part in EXCLUDED_NAMES for part in path.parts) and path.suffix != ".pyc"
 
 
-def iter_files() -> list[Path]:
+def iter_release_files() -> list[Path]:
     result: list[Path] = []
     for item in INCLUDE:
         path = ROOT / item
@@ -66,15 +69,37 @@ def iter_files() -> list[Path]:
     return sorted(set(result), key=lambda p: p.as_posix())
 
 
-def write_zip(destination: Path, version: str) -> None:
+def iter_skill_files() -> list[Path]:
+    skill = ROOT / "skills" / SKILL_NAME
+    if not (skill / "SKILL.md").is_file():
+        raise ValueError(f"portable skill is missing: skills/{SKILL_NAME}/SKILL.md")
+    return sorted(
+        (path for path in skill.rglob("*") if path.is_file() and should_include(path.relative_to(ROOT))),
+        key=lambda p: p.as_posix(),
+    )
+
+
+def add_file(archive: zipfile.ZipFile, path: Path, arcname: str) -> None:
+    info = zipfile.ZipInfo(arcname, FIXED_TIME)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.external_attr = 0o100644 << 16
+    archive.writestr(info, path.read_bytes())
+
+
+def write_release_zip(destination: Path, version: str) -> None:
     prefix = f"pdc-{version}"
     with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
-        for path in iter_files():
+        for path in iter_release_files():
             relative = path.relative_to(ROOT).as_posix()
-            info = zipfile.ZipInfo(f"{prefix}/{relative}", FIXED_TIME)
-            info.compress_type = zipfile.ZIP_DEFLATED
-            info.external_attr = 0o100644 << 16
-            archive.writestr(info, path.read_bytes())
+            add_file(archive, path, f"{prefix}/{relative}")
+
+
+def write_skill_zip(destination: Path) -> None:
+    skill_root = ROOT / "skills" / SKILL_NAME
+    with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        for path in iter_skill_files():
+            relative = path.relative_to(skill_root).as_posix()
+            add_file(archive, path, f"{SKILL_NAME}/{relative}")
 
 
 def sha256(path: Path) -> str:
@@ -83,6 +108,16 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def write_checksum(archive: Path) -> Path:
+    checksum = archive.with_name(archive.name + ".sha256")
+    checksum.write_text(
+        f"{sha256(archive)}  {archive.name}\n",
+        encoding="utf-8",
+        newline="\n",
+    )
+    return checksum
 
 
 def parser() -> argparse.ArgumentParser:
@@ -102,13 +137,17 @@ def main() -> int:
         if output.exists():
             shutil.rmtree(output)
         output.mkdir(parents=True)
-        archive = output / f"pdc-{version}.zip"
-        write_zip(archive, version)
-        digest = sha256(archive)
-        checksum = output / f"pdc-{version}.zip.sha256"
-        checksum.write_text(f"{digest}  {archive.name}\n", encoding="utf-8", newline="\n")
-        print(archive)
-        print(checksum)
+
+        release_archive = output / f"pdc-{version}.zip"
+        write_release_zip(release_archive, version)
+        release_checksum = write_checksum(release_archive)
+
+        skill_archive = output / f"pdc-agent-skill-{version}.zip"
+        write_skill_zip(skill_archive)
+        skill_checksum = write_checksum(skill_archive)
+
+        for path in (release_archive, release_checksum, skill_archive, skill_checksum):
+            print(path)
         return 0
     except (OSError, ValueError, json.JSONDecodeError, zipfile.BadZipFile) as exc:
         print(f"release build failed: {exc}", file=sys.stderr)
