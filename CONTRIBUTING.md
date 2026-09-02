@@ -24,7 +24,7 @@
 
 ```bash
 python skills/product-development-controller/scripts/audit_skill_package.py
-python scripts/public_preview_ci.py
+python scripts/public_ci.py
 ```
 
 公开 CI 会在 Linux / Windows / macOS 的 Python 3.11 / 3.12 / 3.13 上重新运行完整验证。
