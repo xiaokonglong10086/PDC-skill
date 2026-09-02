@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""安装、检查并创建 PDC 首次用户 Preview 示例。"""
+"""安装、检查并创建 PDC 公开 Beta 的虚构示例。"""
 
 from __future__ import annotations
 
@@ -94,13 +94,13 @@ def install(args: argparse.Namespace) -> int:
     destination = home / "plugins" / PLUGIN_NAME
     marketplace = home / ".agents" / "plugins" / "marketplace.json"
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    backup_root = home / ".pdc-preview-backups" / timestamp
+    backup_root = home / ".pdc-backups" / timestamp
 
     try:
         if not (source / ".codex-plugin" / "plugin.json").is_file():
-            raise ValueError("当前文件夹不是完整的 PDC Preview。")
+            raise ValueError("当前文件夹不是完整的 PDC 发行包。")
         if not (source / "skills" / "product-development-controller" / "SKILL.md").is_file():
-            raise ValueError("当前 Preview 缺少 PDC Skill 包。")
+            raise ValueError("当前 PDC 发行包缺少 Skill 文件。")
 
         if destination.exists() and destination.resolve() != source.resolve():
             if not args.replace:
@@ -165,7 +165,7 @@ def doctor(args: argparse.Namespace) -> int:
         (
             "PDC 插件",
             (destination / ".codex-plugin" / "plugin.json").is_file(),
-            "请在 Preview 文件夹中运行 `python scripts/pdc_first_run.py install`。",
+            "请在 PDC 文件夹中运行 `python scripts/pdc_first_run.py install`。",
         )
     )
     checks.append(
@@ -204,7 +204,7 @@ def doctor(args: argparse.Namespace) -> int:
             )
         )
     elif not failed:
-        print("PDC 已准备好开始首次用户示例。")
+        print("PDC 已准备好开始示例。")
         print("下一步：运行 `python scripts/pdc_first_run.py demo`。")
     else:
         print("开始示例前还需要解决下面的问题：")
@@ -216,8 +216,8 @@ def doctor(args: argparse.Namespace) -> int:
 
 def ensure_git_identity(root: Path) -> None:
     for key, value in (
-        ("user.name", "PDC Preview Demo"),
-        ("user.email", "pdc-preview@example.invalid"),
+        ("user.name", "PDC Demo"),
+        ("user.email", "pdc-demo@example.invalid"),
     ):
         result = run(["git", "config", "--get", key], cwd=root)
         if result.returncode != 0 or not result.stdout.strip():
@@ -232,7 +232,7 @@ def demo(args: argparse.Namespace) -> int:
     destination = (
         Path(args.destination).expanduser().resolve()
         if args.destination
-        else (Path.cwd() / "pdc-first-user-demo").resolve()
+        else (Path.cwd() / "pdc-demo").resolve()
     )
     skill = installed / "skills" / "product-development-controller"
     init_script = skill / "scripts" / "init_project.py"
@@ -278,7 +278,7 @@ def demo(args: argparse.Namespace) -> int:
         (destination / "PRODUCT_BRIEF.md").write_text(brief, encoding="utf-8", newline="\n")
         (destination / "SYNTHETIC_FEEDBACK.md").write_text(feedback, encoding="utf-8", newline="\n")
         (destination / "README.md").write_text(
-            "# PDC 首次用户示例\n\n请在 Codex Desktop 中打开这个文件夹，然后发送 demo 命令打印出来的提示词。\n",
+            "# PDC 虚构示例\n\n请在 Codex Desktop 中打开这个文件夹，然后发送 demo 命令打印出来的提示词。\n",
             encoding="utf-8",
             newline="\n",
         )
@@ -342,7 +342,7 @@ def parser() -> argparse.ArgumentParser:
     root = argparse.ArgumentParser(description=__doc__)
     subparsers = root.add_subparsers(dest="command", required=True)
 
-    install_parser = subparsers.add_parser("install", help="安装本地 PDC Preview 插件")
+    install_parser = subparsers.add_parser("install", help="安装本地 PDC 插件")
     install_parser.add_argument("--home", help="用于验证的替代用户目录")
     install_parser.add_argument("--replace", action="store_true", help="备份并替换已有安装")
     install_parser.set_defaults(handler=install)
@@ -352,7 +352,7 @@ def parser() -> argparse.ArgumentParser:
     doctor_parser.add_argument("--json", action="store_true")
     doctor_parser.set_defaults(handler=doctor)
 
-    demo_parser = subparsers.add_parser("demo", help="创建虚构的首次用户示例")
+    demo_parser = subparsers.add_parser("demo", help="创建完全虚构的 PDC 示例")
     demo_parser.add_argument("--home", help="用于验证的替代用户目录")
     demo_parser.add_argument("--destination", help="示例仓库目标位置")
     demo_parser.set_defaults(handler=demo)
