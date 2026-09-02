@@ -43,9 +43,11 @@ Tag Release 会再次运行相同矩阵。
 
 ```bash
 python skills/product-development-controller/scripts/audit_skill_package.py
-python scripts/public_preview_ci.py
+python scripts/public_ci.py
 python scripts/build_release.py --output-dir dist
 ```
+
+`public_preview_ci.py` 作为早期 Preview 的兼容入口暂时保留；新的公开接口是 `public_ci.py`。
 
 ## 证据边界
 
